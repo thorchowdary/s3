@@ -1,0 +1,42 @@
+s3: as static website hosting
+------------------------------
+we can host the static websites in s3, since static websites does not require any cpu/memory to run the applications so we can run in s3
+
+we can upload the files in s3 all the files css and html files
+
+should not create folder and not to uplaod inside the folder in s3
+-------------------------------------------------------------------
+i faced this issue 
+i created the folder and inside that i uploaded the all css,html files
+and i enabled the public access to the folder, and 
+enabled static web site hosting and in that 
+we are giving "Index document" as index.html and can also give error.html if we get any error while accessing the files we will get error page displayed
+
+steps to host static web site hosting:
+---------------------------------------
+1.upload all the files into s3
+2.enable acl(this option will be visble when public access is off)
+3.select all files and "in action drop-down" make (make public using ACL)
+4.enable static web site hosting(in that define index.html and error.html(optinal))
+5.will get endpoint from static website hosting and we can use that endpoint to access the web site
+
+
+her comes one probem:
+-----------------------
+the end point which we got is not https(443) which means not secure 
+and if you can make it secure by giving the acm certificates to that url
+if we have users from world wide the response might be slow inorder to overcome that we can use "cloud front" it make http to https and whenever you create a distibution in cloud front it copies the entires files to edge locations(150+ edge locations) so that whenever request comes it will go to the nearest edge location so that leads to quick respone compare to earlier approch
+
+cloud-front --- distribution(s3 bucket)---copies code to edge locations-----endpoint(https port:443)
+
+we can even block-list the countries in cloud front
+
+
+
+S3:(Global Service)
+-------------------
+But while creating ec2 we need to select region
+we can restrict user at bucket level by givin bucket-policy
+in s3 if we put logs/store data we cannot serach, it does'nt do indexing so we cant
+search
+cloud watch is also a storage Service it does indexing and allows to search
